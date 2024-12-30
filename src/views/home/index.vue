@@ -10,5 +10,27 @@
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
 -->
 <template>
-  home
+  <div class="container">
+    <div class="main"></div>
+    <div class="aside"></div>
+  </div>
 </template>
+
+<style>
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex; /* 设置为 flex 布局 */
+}
+.main {
+  width: 50%;
+  height: 100%;
+  background-color: antiquewhite;
+}
+
+.aside {
+  width: 50%;
+  height: 100%;
+  background-color: aqua;
+}
+</style>
