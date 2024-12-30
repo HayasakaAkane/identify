@@ -123,11 +123,11 @@ export default defineComponent({
             // authStore.setSessionId('123')
             // router.push("/home")
             const { code, data, msg } = await Login(state.model)
-            if(code === 0) {
+            if (code === 0) {
               authStore.setSessionId(data)
-              router.push("/home")
+              router.push('/home')
             } else {
-              console.log("123")
+              console.log('123')
             }
             // if (+code === 200) {
             //   ctx.$message.success({

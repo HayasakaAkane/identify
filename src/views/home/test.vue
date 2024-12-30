@@ -13,8 +13,8 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import { GetAllAvatar } from '@/api/test';
-import { useAuthStore } from '@/pinia/modules/session';
+import { GetAllAvatar } from '@/api/test'
+import { useAuthStore } from '@/pinia/modules/session'
 
 export default defineComponent({
   setup() {
@@ -22,8 +22,8 @@ export default defineComponent({
     const res = ref([])
 
     onMounted(async () => {
-      const {code, data, msg} = await GetAllAvatar(authStore.sessionid)
-      if(code === 0) {
+      const { code, data, msg } = await GetAllAvatar(authStore.sessionid)
+      if (code === 0) {
         console.log(code, data, msg)
         res.value = data
       }
@@ -33,4 +33,3 @@ export default defineComponent({
   },
 })
 </script>
-

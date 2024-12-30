@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -6,10 +6,10 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     setSessionId(id) {
-      this.sessionid = id;
+      this.sessionid = id
     },
     clearSessionId() {
-      this.sessionid = null;
+      this.sessionid = null
     },
   },
-});
+})
