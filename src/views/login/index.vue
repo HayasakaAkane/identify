@@ -120,14 +120,15 @@ export default defineComponent({
         state.loginForm.validate(async valid => {
           if (valid) {
             state.loading = true
-            authStore.setSessionId('123')
-            router.push("/home")
-            // const { code, data, msg } = await Login(state.model)
-            // if(code === 0) {
-            //   router.push("/home")
-            // } else {
-            //   console.log("123")
-            // }
+            // authStore.setSessionId('123')
+            // router.push("/home")
+            const { code, data, msg } = await Login(state.model)
+            if(code === 0) {
+              authStore.setSessionId(data)
+              router.push("/home")
+            } else {
+              console.log("123")
+            }
             // if (+code === 200) {
             //   ctx.$message.success({
             //     message: ctx.$t('login.loginsuccess'),

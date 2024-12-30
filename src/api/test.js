@@ -27,3 +27,16 @@ export const getUsers = data => {
     data,
   })
 }
+
+export const GetAllAvatar = data => {
+  return request({
+    url: '/api/json',
+    method: 'POST',
+    data: {
+      msg_id: "1028"
+    },
+    headers: {
+      sessionid: data
+    }
+  })
+}
