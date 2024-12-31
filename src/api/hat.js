@@ -6,9 +6,9 @@ export const GetSnapPictures = data => {
     url: '/api/json',
     method: 'POST',
     data: {
-      msg_id: '1037',
+      msg_id: '1036',
       qry_len: 50,
-      lib_name: '14',
+      lib_name: '飞翔的',
     },
   })
 }
