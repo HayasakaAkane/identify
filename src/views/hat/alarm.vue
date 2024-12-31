@@ -52,7 +52,7 @@ export default {
 
 <script setup>
 import { ref, getCurrentInstance, onMounted, reactive } from 'vue'
-import { GetAllAvatar } from '@/api/hat'
+import { GetHatAllarm } from '@/api/hat'
 import { useAuthStore } from '@/pinia/modules/session'
 
 const authStore = useAuthStore()
@@ -64,7 +64,7 @@ const { proxy } = getCurrentInstance()
 
 const config = reactive({ name: '', total: 0, page: 1, pageSize: 10 })
 const getAllarmData = async () => {
-  const { code, data, msg } = await GetAllAvatar(authStore.sessionid)
+  const { code, data, msg } = await GetHatAllarm(authStore.sessionid)
   if (code === 0) {
     // tableData.value = data.record
     tableData.value = data.record.map(item => ({

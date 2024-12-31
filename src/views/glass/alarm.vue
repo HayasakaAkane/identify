@@ -58,7 +58,7 @@ export default {
 
 <script setup>
 import { ref, getCurrentInstance, onMounted, reactive } from 'vue'
-import { GetAllAvatar } from '@/api/glass'
+import { GetGlassAllarm } from '@/api/glass'
 import { useAuthStore } from '@/pinia/modules/session'
 import axios from 'axios'
 const authStore = useAuthStore()
@@ -69,7 +69,7 @@ const { proxy } = getCurrentInstance()
 
 const config = reactive({ name: '', total: 0, page: 1, pageSize: 10 })
 const getAllarmData = async () => {
-  const { code, data, msg } = await GetAllAvatar(authStore.sessionid)
+  const { code, data, msg } = await GetGlassAllarm(authStore.sessionid)
   if (code === 0) {
     // tableData.value = data.record
     tableData.value = data.record.map(item => ({

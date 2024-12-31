@@ -1,7 +1,7 @@
 // 帽子相关请求
 import request from '@/utils/request'
 
-export const GetAllAvatar = data => {
+export const GetHatAllarm = data => {
   return request({
     url: '/api/json',
     method: 'POST',

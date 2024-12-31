@@ -2,7 +2,7 @@
 import request from '@/utils/request'
 
 // 眼睛告警
-export const GetAllAvatar = data => {
+export const GetGlassAllarm = data => {
   return request({
     url: '/api/json',
     method: 'POST',
