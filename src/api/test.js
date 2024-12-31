@@ -33,10 +33,10 @@ export const GetAllAvatar = data => {
     url: '/api/json',
     method: 'POST',
     data: {
-      msg_id: "1028"
+      msg_id: '1028',
     },
     headers: {
-      sessionid: data
-    }
+      sessionid: data,
+    },
   })
 }
