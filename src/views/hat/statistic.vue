@@ -4,95 +4,110 @@
       <tr>
         <th>名称</th>
         <th>总数</th>
-        <th>口罩正常佩戴次数</th>
-        <th>口罩未正常佩戴次数</th>
-        <th>未佩戴口罩次数</th>
-        <th>口罩佩戴率</th>
+        <th>帽子正常佩戴次数</th>
+        <th>未佩戴帽子次数</th>
+        <th>帽子佩戴率</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in data1" :key="index">
+      <tr v-for="(row, index) in data" :key="index">
         <td>{{ row.name }}</td>
-        <td>{{ row.total }}</td>
-        <td>{{ row.maskWornCorrectly }}</td>
-        <td>{{ row.maskWornIncorrectly }}</td>
-        <td>{{ row.noMask }}</td>
-        <td>{{ row.wearingRate }}%</td>
+        <td>{{ row.stats.totalRespirators }}</td>
+        <td>{{ row.stats.cap }}</td>
+        <td>{{ row.stats.hat_style_type_none }}</td>
+        <td>{{ row.stats.fullAndNoseRatio }}%</td>
       </tr>
       <tr>
         <td><strong>总计</strong></td>
-        <td>{{ totalSum }}</td>
-        <td>{{ maskWornCorrectlySum }}</td>
-        <td>{{ maskWornIncorrectlySum }}</td>
-        <td>{{ noMaskSum }}</td>
-        <td>{{ totalWearingRate }}%</td>
+        <td>{{ totalcap + totalNone }}</td>
+        <td>{{ totalcap }}</td>
+        <td>{{ totalNone }}</td>
+        <td>{{ (totalcap / (totalcap + totalNone)) * 100 }}%</td>
       </tr>
     </tbody>
   </table>
 </template>
 
-<script setup>
+<script setup="js">
 import { ref, onMounted } from 'vue'
 import { GetSnapPictures } from '@/api/hat'
 
 const loading = ref(false)
 const error = ref('')
 
-const data1 = ref([
-  {
-    name: '张三',
-    total: 100,
-    maskWornCorrectly: 85,
-    maskWornIncorrectly: 10,
-    noMask: 5,
-    wearingRate: ((85 / 100) * 100).toFixed(2),
-  },
-  {
-    name: '李四',
-    total: 90,
-    maskWornCorrectly: 70,
-    maskWornIncorrectly: 15,
-    noMask: 5,
-    wearingRate: ((70 / 90) * 100).toFixed(2),
-  },
-  {
-    name: '王五',
-    total: 80,
-    maskWornCorrectly: 60,
-    maskWornIncorrectly: 15,
-    noMask: 5,
-    wearingRate: ((60 / 80) * 100).toFixed(2),
-  },
-])
+const data = ref([])
 
 const Data = ref()
-const data = ref()
+const record = ref()
 
 const fetchData = async () => {
   loading.value = true
   error.value = ''
   try {
-    await GetSnapPictures(Data)
-    // 假设接口返回数据为 { list: [{ name: ..., total: ..., maskWornCorrectly: ..., maskWornIncorrectly: ..., noMask: ... }] }
-    // const list = response.data.list;
-    // data.value = list.map((item) => ({
-    //   name: item.name,
-    //   total: item.total,
-    //   maskWornCorrectly: item.maskWornCorrectly,
-    //   maskWornIncorrectly: item.maskWornIncorrectly,
-    //   noMask: item.noMask,
-    //   wearingRate: ((item.maskWornCorrectly / item.total) * 100).toFixed(2),
-    // }));
-    // data.value=Data.data.record.map((item)=>{
-    //   let array={}
+    Data.value = await GetSnapPictures()
 
-    //   return array
-    // })
+    record.value = Data.value.data.record
+    console.log('----------------------------------')
+    console.log(record)
+    data.value = dealdata(record)
   } catch (err) {
     error.value = '数据加载失败，请稍后重试。'
   } finally {
     loading.value = false
   }
+}
+
+let totalNone = 0
+let totalcap = 0
+
+function dealdata(data) {
+  const group = {}
+  data.value.forEach(item => {
+    const groupKey = item.person_name // 使用 item 中的 name 字段作为分组键
+
+    if (!group[groupKey]) {
+      group[groupKey] = [] // 如果没有该组，初始化为一个数组
+    }
+    group[groupKey].push(item) // 将当前数据添加到对应组
+  })
+  console.log('----------------------------------')
+
+  console.log(group)
+
+  const treeData = Object.keys(group).map(name => {
+    const groupItems = group[name]
+
+    // 统计 st_respirator 的三种情况的数量
+    let hat_style_type_none = 0
+    let cap = 0
+
+    groupItems.forEach(item => {
+      if (item.face_attr.cap_style === 'hat_style_type_none') {
+        totalNone++
+        hat_style_type_none++
+      } else if (item.face_attr.cap_style === 'cap') {
+        cap++
+        totalcap++
+      }
+    })
+
+    // 计算 st_respirator_full 和 st_respirator_nose 的占比
+    const totalRespirators = hat_style_type_none + cap
+    const fullAndNoseRatio =
+      totalRespirators > 0 ? (cap / totalRespirators) * 100 : 0
+    return {
+      name, // 分组名称
+      children: groupItems, // 当前组的数据
+      stats: {
+        totalRespirators, // 总和
+        hat_style_type_none,
+        cap,
+        fullAndNoseRatio,
+      },
+    }
+  })
+  console.log(treeData)
+  return treeData
 }
 
 onMounted(() => {
