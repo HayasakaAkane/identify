@@ -89,32 +89,32 @@ router.beforeEach(async to => {
   //     return to.fullPath
   //   }
 
-    // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
-    const { menus, generateMenus } = useMenus()
-    console.log(menus)
-    if (menus.length <= 0) {
-      try {
-        await generateMenus()
-        return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
-      } catch (err) {
-        loadingInstance.close()
-        return false
-      }
+  // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
+  const { menus, generateMenus } = useMenus()
+  console.log(menus)
+  if (menus.length <= 0) {
+    try {
+      await generateMenus()
+      return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
+    } catch (err) {
+      loadingInstance.close()
+      return false
     }
+  }
 
-    // 判断是否处于锁屏状态
-    if (to.name !== 'lock') {
-      const { authorization } = useApp()
-      if (!!authorization && !!authorization.screenCode) {
-        return {
-          name: 'lock',
-          query: {
-            redirect: to.path,
-          },
-          replace: true,
-        }
+  // 判断是否处于锁屏状态
+  if (to.name !== 'lock') {
+    const { authorization } = useApp()
+    if (!!authorization && !!authorization.screenCode) {
+      return {
+        name: 'lock',
+        query: {
+          redirect: to.path,
+        },
+        replace: true,
       }
     }
+  }
   // }
 })
 
