@@ -138,16 +138,16 @@ import { da } from 'element-plus/es/locale'
 //定义人员信息接口
 interface personInt {
   lib_name: string, //库名称
-  person_addr: string ,//地址
+  person_addr: string, //地址
   person_age: string, //年龄
   person_gender: string, //性别
-  person_idcard: string, //身份证号
+  person_idcard: string ,//身份证号
   person_name: string ,//姓名
   img: string ,//地库图片
-  snap_buf: string, //抓拍人脸
+  snap_buf: string ,//抓拍人脸
   snap_frame: string, //抓拍人脸场景图
-  trigger: string, //触发时间
-  similarity: string, //相似度
+  trigger: string ,//触发时间
+  similarity: string ,//相似度
 }
 let personInfo: personInt
 const img_url = ref(
@@ -600,14 +600,20 @@ const handleCurrentChange = (val: number) => {
 }
 
 .percentage {
-  width: 50px; /* 根据需要调整宽度 */
-  height: 30px; /* 根据需要调整高度 */
-  background-color: #4caf50; /* 绿色背景 */
-  color: white; /* 白色文本 */
-  border-radius: 10%; /* 圆形 */
+  width: 50px;
+  /* 根据需要调整宽度 */
+  height: 30px;
+  /* 根据需要调整高度 */
+  background-color: #4caf50;
+  /* 绿色背景 */
+  color: white;
+  /* 白色文本 */
+  border-radius: 10%;
+  /* 圆形 */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px; /* 根据需要调整字体大小 */
+  font-size: 16px;
+  /* 根据需要调整字体大小 */
 }
 </style>
