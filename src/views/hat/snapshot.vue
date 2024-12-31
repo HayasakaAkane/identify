@@ -83,10 +83,6 @@ const handleImageError = row => {
 </script>
 
 <template>
-<<<<<<< HEAD
-  帽子抓拍
-</template>
-=======
   <div class="container">
     <el-table :data="tableData" class="sticky-header">
       <!-- 表格列定义 -->
@@ -172,4 +168,3 @@ const handleImageError = row => {
   margin-top: 20px;
 }
 </style>
->>>>>>> wintien

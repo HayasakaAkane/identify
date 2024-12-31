@@ -16,6 +16,7 @@ const currentPage = ref(1)
 
 // 从API获取数据
 const fetchData = async () => {
+  console.log("213123123")
   try {
     const authStore = useAuthStore()
     const response = await GetAllAvatar(
@@ -72,3 +73,85 @@ const handlePageSizeChange = async newSize => {
   await fetchData()
 }
 </script>
+
+<template>
+  <div class="container">
+    <el-table :data="tableData" class="sticky-header">
+      <!-- 表格列定义 -->
+      <el-table-column fixed prop="imageUrl" label="照片" width="150">
+        <template #default="scope">
+          <div class="photo-cell">
+            <img :src="scope.row.photo" alt="照片" class="photo-img" />
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="gender" label="性别" width="150"></el-table-column>
+      <el-table-column prop="age" label="年龄" width="180"></el-table-column>
+      <el-table-column
+        prop="glassStatus"
+        label="眼镜"
+        width="240"
+      ></el-table-column>
+      <el-table-column
+        prop="faceLibrary"
+        label="人像库名称"
+        width="250"
+      ></el-table-column>
+      <el-table-column
+        prop="libraryType"
+        label="人像库类型"
+        width="250"
+      ></el-table-column>
+      <el-table-column
+        prop="captureTime"
+        label="抓拍时间"
+        width="200"
+      ></el-table-column>
+    </el-table>
+  </div>
+  <div class="pagination-container">
+    <el-pagination
+      background
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      :page-size="pageSize"
+      :page-sizes="pageSizes"
+      v-model:current-page="currentPage"
+      @current-change="handleCurrentChange"
+      @size-change="handlePageSizeChange"
+    />
+  </div>
+</template>
+
+<style scoped>
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-header {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.photo-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+</style>

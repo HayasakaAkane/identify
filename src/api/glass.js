@@ -23,15 +23,8 @@ export const GetAllAvatar = (sessionid, startNo, qryLen) => {
     url: '/api/json',
     method: 'POST',
     data: {
-      msg_id: '1036',
-      // msg_id: "1040",
-      qry_len: 50,
-    },
-    headers: {
-      sessionid: data,
       msg_id: '1037',
-      start_no: startNo,
-      qry_len: qryLen,
+      qry_len: 50,
     },
     headers: {
       sessionid: sessionid,
