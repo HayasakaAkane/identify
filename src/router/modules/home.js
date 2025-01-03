@@ -35,24 +35,24 @@ export default [
       },
     ],
   },
-  {
-    path: '/test123',
-    component: Layout,
-    name: 'Dashboard',
-    meta: {
-      title: 'menu.testpage',
-    },
-    // icon: 'icon-home',
-    children: [
-      {
-        path: '',
-        name: 'test',
-        component: Test,
-        meta: {
-          title: 'menu.testpage',
-          affix: true,
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/test123',
+  //   component: Layout,
+  //   name: 'Dashboard',
+  //   meta: {
+  //     title: 'menu.testpage',
+  //   },
+  //   // icon: 'icon-home',
+  //   children: [
+  //     {
+  //       path: '',
+  //       name: 'test',
+  //       component: Test,
+  //       meta: {
+  //         title: 'menu.testpage',
+  //         affix: true,
+  //       },
+  //     },
+  //   ],
+  // },
 ]

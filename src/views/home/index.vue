@@ -12,78 +12,34 @@
 <template>
   <div class="container">
     <div class="medium">
-      <el-table
-        :data="tableData"
-        highlight-current-row
-        style="width: 100%;height: 100%;"
-      >
+      <el-table :data="tableData"  style="width: 100%;height: 100%;" :header-row-style="{color: '#fff', background: '#353f73'}">
         <!-- 库名称 -->
-        <el-table-column
-          prop="lib_name"
-          label="库名称"
-          width="100"
-          class="el_column"
-        />
+        <el-table-column prop="lib_name" label="库名称" width="150" class="el_column" />
 
         <!-- 地址 -->
-        <el-table-column
-          prop="person_addr"
-          label="地址"
-          width="180"
-          class="el_column"
-        />
+        <el-table-column prop="person_addr" label="地址" width="180" class="el_column" />
 
         <!-- 年龄 -->
-        <el-table-column
-          prop="person_age"
-          label="年龄"
-          width="60"
-          class="el_column"
-        />
+        <el-table-column prop="person_age" label="年龄" width="60" class="el_column" />
 
         <!-- 性别 -->
-        <el-table-column
-          prop="person_gender"
-          label="性别"
-          width="60"
-          class="el_column"
-        />
+        <el-table-column prop="person_gender" label="性别" width="60" class="el_column" />
 
         <!-- 身份证号 -->
-        <el-table-column
-          prop="person_idcard"
-          label="身份证号"
-          width="180"
-          class="el_column"
-        />
+        <el-table-column prop="person_idcard" label="身份证号" width="180" class="el_column" />
 
         <!-- 姓名 -->
-        <el-table-column
-          prop="person_name"
-          label="姓名"
-          width="100"
-          class="el_column"
-        />
+        <el-table-column prop="person_name" label="姓名" width="100" class="el_column" />
 
         <!-- 地库图片 -->
-        <el-table-column
-          prop="img"
-          label="底库图片"
-          width="180"
-          class="el_column"
-        >
+        <el-table-column prop="img" label="底库图片" width="180" class="el_column">
           <template v-slot="scope">
             <img :src="scope.row.img" alt="底库图片" class="img_style" />
           </template>
         </el-table-column>
 
-        <!-- 抓拍人脸 -->
-        <el-table-column
-          prop="snap_buf"
-          label="抓拍人脸"
-          width="180"
-          class="el_column"
-        >
+        <!-- 抓拍人脸 --> 
+        <el-table-column prop="snap_buf" label="抓拍人脸" width="180" class="el_column">
           <template v-slot="scope">
             <img :src="scope.row.snap_buf" alt="抓拍人脸" class="img_style" />
           </template>
@@ -91,27 +47,17 @@
       </el-table>
       <!-- 分页器 -->
       <el-row style="width: 100%; align-items: center;justify-content: center">
-        <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
-          layout=" prev, pager, next"
-          :total="total"
-          @current-change="handleCurrentChange"
-        />
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" layout=" prev, pager, next"
+          :total="total" @current-change="handleCurrentChange" />
       </el-row>
 
       <!-- <el-pagination size="small" background layout="prev, pager, next" :total="50" class="mt-4" /> -->
     </div>
     <el-scrollbar class="aside">
       <div>
-        <h2 style="text-align: center;justify-content: center;">实时告警</h2>
-        <div
-          v-for="p in person_msg"
-          :key="p.person_idcard"
-          class="slide-in"
-          :style="{ animationDelay: `1s` }"
-          style="display: flex;background-color: rgb(58, 69, 104);margin: 5px;border-radius: 5px;"
-        >
+        <h2 style="text-align: center;justify-content: center;margin-top: 15px;">实时告警</h2>
+        <div v-for="p in person_msg" :key="p.person_idcard" class="slide-in" :style="{ animationDelay: `1s` }"
+          style="display: flex;background-color: rgb(58, 69, 104);margin: 5px;border-radius: 5px;">
           <div class="img-container" style="width: 30%;">
             <img :src="p.img" alt="底库图片" class="img_style" />
           </div>
@@ -131,23 +77,23 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUpdate, onMounted, ref, watch } from 'vue'
+import { onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
 import { GetKey } from '@/api/home'
 import axios from 'axios'
 import { da } from 'element-plus/es/locale'
 //定义人员信息接口
 interface personInt {
   lib_name: string, //库名称
-  person_addr: string, //地址
+  person_addr: string,//地址
   person_age: string, //年龄
   person_gender: string, //性别
-  person_idcard: string ,//身份证号
-  person_name: string ,//姓名
-  img: string ,//地库图片
-  snap_buf: string ,//抓拍人脸
+  person_idcard: string, //身份证号
+  person_name: string,//姓名
+  img: string,//地库图片
+  snap_buf: string, //抓拍人脸
   snap_frame: string, //抓拍人脸场景图
-  trigger: string ,//触发时间
-  similarity: string ,//相似度
+  trigger: string, //触发时间
+  similarity: string, //相似度
 }
 let personInfo: personInt
 const img_url = ref(
@@ -435,14 +381,14 @@ const ip = '192.168.1.101'
 const port = '80'
 const socket = new WebSocket(`ws://${ip}:${port}/ws/`)
 
-socket.onopen = function(event) {
+socket.onopen = function (event) {
   const msg = {
     msg_id: '776',
     key: key.value,
   }
   socket.send(JSON.stringify(msg))
 }
-socket.onmessage = function(event) {
+socket.onmessage = function (event) {
   // 确保 event.data 是一个对象
   const data = JSON.parse(event.data)
   console.log('receive', data.data.hasOwnProperty('face_attr'))
@@ -472,13 +418,18 @@ socket.onmessage = function(event) {
   console.log('come out')
   console.log('WebSocket message received and processed:', personInfo)
 }
+// 设置定时器，每隔2000毫秒（即2秒）调用一次sendMessage函数
+// const intervalId = setInterval(socket.onmessage, 2000);
 
-// socket.onclose = function(event) {
-//   console.log('WebSocket is closed now.');
-// };
+onUnmounted(()=>{
+socket.onclose = function(event) {
+  console.log('WebSocket is closed now.');
+};
 
-// // 当你想要关闭连接时
-// socket.close();
+// 当你想要关闭连接时
+socket.close();
+})
+
 
 //获取当前页的数据
 function getPageData() {
@@ -505,7 +456,7 @@ const handleCurrentChange = (val: number) => {
 }
 </script>
 
-<style>
+<style scoped>
 .el_pagination {
   position: absolute;
   left: 50%;
@@ -615,5 +566,30 @@ const handleCurrentChange = (val: number) => {
   justify-content: center;
   font-size: 16px;
   /* 根据需要调整字体大小 */
+}
+
+.el-table .el-table__body tr {
+  background-color: #161935; /* 默认行背景色 */
+  color: #fff;
+
+}
+
+.el-table .el-table__body tr:hover {
+  background-color: #1a1f35; /* 悬停时的行背景色 */
+ 
+}
+
+.el-table th {
+  background-color: #161935;
+}
+.el-table th.el-table__cell {
+  background-color: transparent;
+
+}
+.el-table .cell {
+  line-height: 35px;
+}
+.el-table__row:hover > td {
+  background-color: transparent !important;
 }
 </style>

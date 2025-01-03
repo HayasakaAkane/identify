@@ -67,7 +67,7 @@ const tableData = ref([])
 
 const { proxy } = getCurrentInstance()
 
-const config = reactive({ name: '', total: 0, page: 1, pageSize: 10 })
+const config = reactive({ name: '', total: 0, page: 1, pageSize: 15 })
 const getAllarmData = async () => {
   const { code, data, msg } = await GetGlassAllarm(authStore.sessionid)
   if (code === 0) {
@@ -165,7 +165,7 @@ const handleChange = page => {
 
 .table {
   position: relative;
-  height: 520px;
+  height: 100%;
 
   .pager {
     position: absolute;
@@ -175,7 +175,7 @@ const handleChange = page => {
 
   .el-table {
     width: 100%;
-    height: 500px;
+    height: 100%;
   }
 }
 

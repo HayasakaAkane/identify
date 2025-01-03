@@ -27,7 +27,7 @@ const fetchData = async () => {
     console.log('API Response:', response) // 添加日志查看API响应
     if (response.code === 0) {
       const items = response.data.record.map(item => ({
-        imageUrl: '/' + item.snap_path,
+        //imageUrl: '/' + item.snap_path,
         gender: item.face_attr.gender_code === 'male' ? '男' : '女',
         age: Math.floor(item.face_attr.st_age_value),
         glassStatus:
@@ -78,13 +78,13 @@ const handlePageSizeChange = async newSize => {
   <div class="container">
     <el-table :data="tableData" class="sticky-header">
       <!-- 表格列定义 -->
-      <el-table-column fixed prop="imageUrl" label="照片" width="150">
+      <!-- <el-table-column fixed prop="imageUrl" label="照片" width="150">
         <template #default="scope">
           <div class="photo-cell">
             <img :src="scope.row.photo" alt="照片" class="photo-img" />
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column prop="gender" label="性别" width="150"></el-table-column>
       <el-table-column prop="age" label="年龄" width="180"></el-table-column>
       <el-table-column
